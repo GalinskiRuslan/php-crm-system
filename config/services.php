@@ -30,5 +30,8 @@ return [
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
     ],
+    'mobizon' => [
+        'api_key' => env('MOBIZON_API_KEY'),
+    ],
 
 ];
