@@ -75,7 +75,7 @@ class AuthController extends Controller
     private function sendSms($to, $message)
     {
         $client = new \GuzzleHttp\Client();
-        $endpoint = "http://api.mobizon.kz/service/message/sendsmsmessage?text=Hello&apiKey=kzed162ea83f13bdf624152ac71a28a07ddc3ac4f1260b8f48b10e999f429b86e3b026&recipient=7707142366&";
+        $endpoint = "http://api.mobizon.kz/service/message/sendsmsmessage?text=$message&apiKey=kzed162ea83f13bdf624152ac71a28a07ddc3ac4f1260b8f48b10e999f429b86e3b026&recipient=$to&";
         $response = $client->request("GET", $endpoint);
         dd($response->getBody()->getContents(), $response->getStatusCode(), $response);
 

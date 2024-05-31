@@ -20,15 +20,9 @@ class MobizonService
 
     public function sendSms($recipient, $message)
     {
-        $response = $this->mobizon->call(
-            "http://api.mobizon.kz",
-            'get',
-            [
-                'recipient' => $recipient,
-                'text' => $message,
-            ]
-        );
-
-        return $response;
+        $client = new \GuzzleHttp\Client();
+        $endpoint = "http://api.mobizon.kz/service/message/sendsmsmessage?text=$message&apiKey=kzed162ea83f13bdf624152ac71a28a07ddc3ac4f1260b8f48b10e999f429b86e3b026&recipient=+7$recipient&";
+        $response = $client->request("GET", $endpoint);
+        return $response->getBody()->getContents();
     }
 }
