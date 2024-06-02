@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 // Route::post('/registration', [AuthController::class, 'register']);
 Route::get('/auth/getSms', [AuthApiController::class, 'getSmsCode']);
-// Route::post('/verify', [AuthController::class, 'verify']);
+Route::post('/auth/checkCode', [AuthApiController::class, 'checkCode']);
 Route::get('/hello', function () {
     return response()->json('hello', 200);
 });
