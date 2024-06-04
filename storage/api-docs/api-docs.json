@@ -1,10 +1,183 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "Laravel Swagger",
+        "title": "Api Documentation",
         "version": "1.0.0"
     },
     "paths": {
-        "/api": {}
+        "/api": {},
+        "/api/auth/getSms": {
+            "get": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Получение смс кода",
+                "operationId": "4111d330fcc5770cacd4e18cb13008ae",
+                "parameters": [
+                    {
+                        "name": "phone",
+                        "in": "query",
+                        "description": "Номер телефона",
+                        "required": true,
+                        "example": "7999999999"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/api/auth/registration": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Регистрация",
+                "operationId": "dcfd8369332937fff75768321e4c6ca1",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "properties": {
+                                            "code_id": {
+                                                "type": "string",
+                                                "example": "20cccf8f-db3d-4c52-95cb-3c11c490c05e"
+                                            },
+                                            "code": {
+                                                "type": "string",
+                                                "example": "9999"
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "example": "Ruslan"
+                                            },
+                                            "email": {
+                                                "type": "string",
+                                                "example": "qK5pI@example.com"
+                                            },
+                                            "password": {
+                                                "type": "string",
+                                                "example": "123456789"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/api/auth/checkCode": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Проверка кода",
+                "operationId": "9075dede7e06ea3b7d9a56fbe3cae1fe",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "properties": {
+                                            "code_id": {
+                                                "type": "string",
+                                                "example": "20cccf8f-db3d-4c52-95cb-3c11c490c05e"
+                                            },
+                                            "code": {
+                                                "type": "string",
+                                                "example": "9999"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/api/user": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Получение информации о пользователе",
+                "operationId": "f26a4d085391e5a14032f149a110f53e",
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/auth/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Авторизация",
+                "operationId": "8ded8b75ae66534be208f2a8470255ca",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "properties": {
+                                            "phone": {
+                                                "type": "string",
+                                                "example": "7999999999"
+                                            },
+                                            "password": {
+                                                "type": "string",
+                                                "example": "12345678"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer"
+            }
+        }
     }
 }
