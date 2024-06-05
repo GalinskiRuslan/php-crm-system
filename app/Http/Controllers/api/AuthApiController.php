@@ -179,6 +179,7 @@ class AuthApiController extends Controller
      */
     public function userInfo(Request $request)
     {
+        dd(Auth::user());
         $user = Auth::user();
         if ($user) {
             return response()->json(['user' => $user]);
@@ -220,10 +221,68 @@ class AuthApiController extends Controller
             return response()->json($error->getMessage(), 400, [], JSON_UNESCAPED_UNICODE);
         }
         if (!Auth::attempt(['phone' => $request->phone, 'password' => $request->password])) {
-            return response()->json('Неверный  телефон или пароль', 400);
+            return response()->json('Неверный  телефон или пароль', 400, [], JSON_UNESCAPED_UNICODE);
         }
         $user = Auth::user();
         $token = JWTAuth::fromUser($user);
         return response()->json($token);
+    }
+
+    /**
+     *  @OA\Post(
+     *    path="/api/auth/resetPassword",
+     *    summary = "Сброс пароля",
+     *    tags={"Auth"},
+     *      @OA\RequestBody(
+     *        @OA\JsonContent(
+     *         allOf={
+     *           @OA\Schema(
+     *             @OA\Property( property="code_id", type="string", example="20cccf8f-db3d-4c52-95cb-3c11c490c05e"),
+     *             @OA\Property( property="code", type="string", example="9999"),
+     *             @OA\Property( property="password", type="string", example="12345678"),
+     *           )
+     *         }
+     *        )
+     *      ),
+     *      @OA\Response(
+     *       response=200,
+     *       description="successful operation",
+     *      )
+     *  )
+     */
+    public function resetPassword(Request $request)
+    {
+        try {
+            $request->validate([
+                'code_id' => 'required|string',
+                'code' => 'required|string|max:4|min:4',
+                'password' => 'required|string|min:8|max:16',
+            ]);
+        } catch (Throwable $error) {
+            return response()->json($error->getMessage(), 400, [], JSON_UNESCAPED_UNICODE);
+        }
+        if (!Phones::where('code_id', $request->code_id)->first()) {
+            return response()->json("Код не найден", 400, [], JSON_UNESCAPED_UNICODE);
+        }
+        if (Phones::where('code_id', $request->code_id)->first()->updated_at < now()->subMinutes(15)) {
+            Phones::where('code_id', $request->code_id)->delete();
+            return response()->json('Срок действия кода истек', 400, [], JSON_UNESCAPED_UNICODE);
+        }
+        if (Phones::where('code_id', $request->code_id)->first()->code !== $request->code) {
+            return response()->json('Неверный код', 400, [], JSON_UNESCAPED_UNICODE);
+        }
+        if (!User::where("phone", Phones::where('code_id', $request->code_id)->first()->phone)) {
+            return response()->json("Пользователь не найден", 400, [], JSON_UNESCAPED_UNICODE);
+        } else {
+            $user = User::where('phone', Phones::where('code_id', $request->code_id)->first()->phone)->first();
+            $user->password = bcrypt($request->password);
+            $user->save();
+            Phones::where('code_id', $request->code_id)->delete();
+            return response()->json("Пароь успешно изменен", 200, [], JSON_UNESCAPED_UNICODE);
+        }
+    }
+    public function hello()
+    {
+        return response()->json("Hello", 200, [], JSON_UNESCAPED_UNICODE);
     }
 }
