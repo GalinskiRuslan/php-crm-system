@@ -170,6 +170,47 @@
                     }
                 }
             }
+        },
+        "/api/auth/resetPassword": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Сброс пароля",
+                "operationId": "21b86e8abc0a5a9fb7a80d2947a317b6",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "properties": {
+                                            "code_id": {
+                                                "type": "string",
+                                                "example": "20cccf8f-db3d-4c52-95cb-3c11c490c05e"
+                                            },
+                                            "code": {
+                                                "type": "string",
+                                                "example": "9999"
+                                            },
+                                            "password": {
+                                                "type": "string",
+                                                "example": "12345678"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
         }
     },
     "components": {
