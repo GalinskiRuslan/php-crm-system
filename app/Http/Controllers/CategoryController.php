@@ -8,26 +8,11 @@ use Illuminate\Support\Facades\Storage;
 
 class CategoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $categories = Category::all();
         return view('categories.index', compact('categories'));
     }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -46,33 +31,33 @@ class CategoryController extends Controller
         }
         return redirect()->back()->with('error', 'Something went wrong');
     }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
+        $category = Category::find($id);
+        if (!$category) {
+            return redirect()->back()->with('error', 'Category not found');
+        }
+        return view('categories.edit', compact('category'));
     }
-
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required',
+            'slug' => 'required',
+            'description' => '',
+        ]);
+        $category = Category::find($id);
+        if (!$category) {
+            return redirect()->back()->with('error', 'Category not found');
+        }
+        $category->update($validated);
+        if ($request->hasFile('image')) {
+            Storage::delete("public" . str_replace('/storage', '', $category->image));
+            $path = $request->file('image')->store('public/categories');
+            $category->update(['image' => '/storage/' . str_replace('public/', '', $path)]);
+        }
+        return redirect()->back()->with('success', 'Category updated successfully');
     }
-
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Request $request,)
     {
         $validated = $request->validate([
@@ -83,7 +68,6 @@ class CategoryController extends Controller
         if (!$category) {
             return redirect()->back()->with('error', 'Category not found');
         }
-        // dd(Storage::allFiles('public/categories'),  "public" . str_replace('/storage', '', $category->image), $category->image);
         $category->delete();
 
         Storage::delete("public" . str_replace('/storage', '', $category->image));

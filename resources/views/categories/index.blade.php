@@ -13,7 +13,8 @@
 
             <form action="{{ route('categories.destroy', ['id' => $category->id]) }}" method="POST"><input type="hidden"
                     name="_method" value="DELETE"><input type="hidden" name="_token" value="{{ csrf_token() }}"><button
-                    type="submit">X</button></form>
+                    type="submit">X</button></form><a
+                href="{{ route('categories.edit', ['category' => $category->id]) }}"><button>edit</button></a>
 
         </div>
     @endforeach
