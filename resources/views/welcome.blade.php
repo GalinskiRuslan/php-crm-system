@@ -3,12 +3,8 @@
 
 @section('content')
     @auth
-        <form action="{{ route('logout') }}" method="POST">@csrf<button type="submit">Выйти</button></form>
-        {{ Auth::user()->name }}
-        {{ Auth::user()->phone }}
-        {{ Auth::user()->role }}
+        <p>Это панель управления интернет-магазином</p>
     @endauth
-
     @guest
         <form action="{{ route('login') }}" method="POST" class="login-form">
             @csrf

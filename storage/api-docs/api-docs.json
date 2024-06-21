@@ -6,22 +6,13 @@
     },
     "paths": {
         "/api": {},
-        "/api/auth/getSms": {
+        "/api/categories": {
             "get": {
                 "tags": [
-                    "Auth"
+                    "Categories"
                 ],
-                "summary": "Получение смс кода",
-                "operationId": "4111d330fcc5770cacd4e18cb13008ae",
-                "parameters": [
-                    {
-                        "name": "phone",
-                        "in": "query",
-                        "description": "Номер телефона",
-                        "required": true,
-                        "example": "7999999999"
-                    }
-                ],
+                "summary": "Получение всех категорий",
+                "operationId": "ab41260797b772b96cf6f61a7275289d",
                 "responses": {
                     "200": {
                         "description": "successful operation"

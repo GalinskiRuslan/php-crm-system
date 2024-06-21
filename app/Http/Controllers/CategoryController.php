@@ -26,6 +26,10 @@ class CategoryController extends Controller
         } else {
             $category = Category::create(['name' => $validated['name'], 'slug' => $validated['slug'], 'description' => $validated['description'], 'image' => null]);
         }
+        if ($request->hasFile('icon')) {
+            $pathIcon = $request->file('icon')->store('public/categories/icons');
+            $category = Category::update(['icon' => '/storage/' . str_replace('public/', '', $pathIcon)]);
+        }
         if ($category) {
             return redirect()->back()->with('success', 'Category created successfully');
         }
@@ -55,6 +59,11 @@ class CategoryController extends Controller
             Storage::delete("public" . str_replace('/storage', '', $category->image));
             $path = $request->file('image')->store('public/categories');
             $category->update(['image' => '/storage/' . str_replace('public/', '', $path)]);
+        }
+        if ($request->hasFile('icon')) {
+            Storage::delete("public" . str_replace('/storage', '', $category->icon));
+            $path = $request->file('icon')->store('public/categories/icons');
+            $category->update(['icon' => '/storage/' . str_replace('public/', '', $path)]);
         }
         return redirect()->back()->with('success', 'Category updated successfully');
     }

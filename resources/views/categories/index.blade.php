@@ -5,19 +5,42 @@
 
 
 @section('content')
-    @foreach ($categories as $category)
-        <div>{{ $category->name }}
-            {{ $category->description }}
-            {{ $category->slug }}
-            <img src="{{ $category->image }}" alt="asd" style="max-width: 120px">
+    @if ($categories->count() < 1)
+        <p>Нету категорий товаров магазина, для продолжения добавитье категорий</p>
+    @else
+        <table>
+            <tr>
+                <th>Название</th>
+                <th>Описание</th>
+                <th>Слауг</th>
+                <th>Картинка</th>
+                <th>Иконка</th>
+                <th>
+                    удалить
+                </th>
+                <th>Редактировать</th>
+            </tr>
+            @foreach ($categories as $category)
+                <tr>
+                    <th>{{ $category->name }}</th>
+                    <th>{{ $category->description }}</th>
+                    <th>{{ $category->slug }}</th>
+                    <th><img src="{{ $category->image }}" alt="asd" style="max-width: 120px"></th>
+                    <th><img src="{{ $category->icon }}" alt="asd" style="max-width: 120px"></th>
+                    <th>
+                        <form action="{{ route('categories.destroy', ['id' => $category->id]) }}" method="POST">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                            <button type="submit">X</button>
+                        </form>
+                    </th>
+                    <th><a href="{{ route('categories.edit', ['category' => $category->id]) }}"><button>edit</button></a>
+                    </th>
 
-            <form action="{{ route('categories.destroy', ['id' => $category->id]) }}" method="POST"><input type="hidden"
-                    name="_method" value="DELETE"><input type="hidden" name="_token" value="{{ csrf_token() }}"><button
-                    type="submit">X</button></form><a
-                href="{{ route('categories.edit', ['category' => $category->id]) }}"><button>edit</button></a>
-
-        </div>
-    @endforeach
+                </tr>
+            @endforeach
+        </table>
+    @endif
     <h5>Добаволение новой категории</h5>
     <form action="{{ route('categories.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
