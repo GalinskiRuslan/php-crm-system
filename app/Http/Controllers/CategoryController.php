@@ -28,7 +28,7 @@ class CategoryController extends Controller
         }
         if ($request->hasFile('icon')) {
             $pathIcon = $request->file('icon')->store('public/categories/icons');
-            $category = Category::update(['icon' => '/storage/' . str_replace('public/', '', $pathIcon)]);
+            $category->update(['icon' => '/storage/' . str_replace('public/', '', $pathIcon)]);
         }
         if ($category) {
             return redirect()->back()->with('success', 'Category created successfully');
@@ -77,9 +77,14 @@ class CategoryController extends Controller
         if (!$category) {
             return redirect()->back()->with('error', 'Category not found');
         }
-        $category->delete();
+        try {
+            $category->delete();
 
-        Storage::delete("public" . str_replace('/storage', '', $category->image));
-        return redirect()->back()->with('success', 'Category deleted successfully');
+            Storage::delete("public" . str_replace('/storage', '', $category->image));
+            return redirect()->back()->with('success', 'Category deleted successfully');
+        } catch (\Exception $e) {
+
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+        }
     }
 }

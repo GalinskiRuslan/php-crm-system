@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\api\AuthApiController;
+use App\Http\Controllers\api\BrandsApiController;
 use App\Http\Controllers\api\CategoryApiController;
+use App\Http\Controllers\api\SubcategoryController;
 use Illuminate\Support\Facades\Route;
 
 //Routes for auth
@@ -15,6 +17,6 @@ Route::middleware(['jwt.auth', 'checkUserRole:admin'])->get('/hello', function (
     return 'hello';
 });
 
-// Routes for categories
-
 Route::get('/categories', [CategoryApiController::class, 'getAllCategories']);
+Route::get('/subcategories', [SubcategoryController::class, 'getAllSubcategories']);
+Route::get('/brands', [BrandsApiController::class, 'getAllBrands']);

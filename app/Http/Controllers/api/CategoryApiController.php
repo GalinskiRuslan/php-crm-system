@@ -11,7 +11,7 @@ class CategoryApiController extends Controller
      * @OA\Get(
      *  path="/api/categories",
      *  summary = "Получение всех категорий",
-     *  tags={"Categories"},
+     *  tags={"Shop"},
      * @OA\Response(
      *  response=200,
      *  description="successful operation",

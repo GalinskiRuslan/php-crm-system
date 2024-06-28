@@ -179,7 +179,7 @@ class AuthApiController extends Controller
      *
      * )
      */
-    public function userInfo(Request $request)
+    public function userInfo()
     {
         dd(Auth::user());
         $user = Auth::user();

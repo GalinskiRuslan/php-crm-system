@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BrandsController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SubcategoryController;
 use Illuminate\Support\Facades\Route;
@@ -20,6 +21,12 @@ Route::middleware('checkIsAdmin:admin')->post('/subcategories', [SubcategoryCont
 Route::middleware('checkIsAdmin:admin')->delete('/subcategories', [SubcategoryController::class, 'destroy'])->name('subcategories.destroy');
 Route::middleware('checkIsAdmin:admin')->get('/subcategories/{subcategory}', [SubcategoryController::class, 'edit'])->name('subcategories.edit');
 Route::middleware('checkIsAdmin:admin')->put('/subcategory/{id}', [SubcategoryController::class, 'update'])->name('subcategories.update');
+
+Route::middleware('checkIsAdmin:admin')->get('/brands', [BrandsController::class, 'index'])->name('brands');
+Route::middleware('checkIsAdmin:admin')->post('/brands', [BrandsController::class, 'store'])->name('brands.store');
+Route::middleware('checkIsAdmin:admin')->delete('/brands', [BrandsController::class, 'destroy'])->name('brands.destroy');
+Route::middleware('checkIsAdmin:admin')->get('/brands/{brand}', [BrandsController::class, 'edit'])->name('brands.edit');
+Route::middleware('checkIsAdmin:admin')->put('/brand/{id}', [BrandsController::class, 'update'])->name('brands.update');
 
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::post('/login', [AuthController::class, 'login'])->name('login');

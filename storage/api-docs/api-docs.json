@@ -6,13 +6,22 @@
     },
     "paths": {
         "/api": {},
-        "/api/categories": {
+        "/api/auth/getSms": {
             "get": {
                 "tags": [
-                    "Categories"
+                    "Auth"
                 ],
-                "summary": "Получение всех категорий",
-                "operationId": "ab41260797b772b96cf6f61a7275289d",
+                "summary": "Получение смс кода",
+                "operationId": "4111d330fcc5770cacd4e18cb13008ae",
+                "parameters": [
+                    {
+                        "name": "phone",
+                        "in": "query",
+                        "description": "Номер телефона",
+                        "required": true,
+                        "example": "7999999999"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "successful operation"
@@ -196,6 +205,48 @@
                         }
                     }
                 },
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/api/brands": {
+            "get": {
+                "tags": [
+                    "Shop"
+                ],
+                "summary": "Получение всех брэндов",
+                "operationId": "9ddbc6f0e5e93eb2e2b2a40177bce2cf",
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/api/categories": {
+            "get": {
+                "tags": [
+                    "Shop"
+                ],
+                "summary": "Получение всех категорий",
+                "operationId": "41d4131f5e1a78f7eee22054ac89f75e",
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/api/subcategories": {
+            "get": {
+                "tags": [
+                    "Shop"
+                ],
+                "summary": "Получение всех подкатегорий",
+                "operationId": "e89a22a6ee5767191b25f1baa8265917",
                 "responses": {
                     "200": {
                         "description": "successful operation"
