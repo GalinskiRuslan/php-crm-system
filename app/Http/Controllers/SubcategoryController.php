@@ -76,6 +76,11 @@ class SubcategoryController extends Controller
             $path = $request->file('image')->store('public/subcategories');
             $subcategory->update(['image' => '/storage/' . str_replace('public/', '', $path)]);
         }
+        if ($request->hasFile('icon')) {
+            Storage::delete("public" . str_replace('/storage', '', $subcategory->icon));
+            $pathIcon = $request->file('icon')->store('public/subcategories/icons');
+            $subcategory->update(['icon' => '/storage/' . str_replace('public/', '', $pathIcon)]);
+        }
         return redirect()->back()->with('success', 'Subcategory updated successfully');
     }
 }

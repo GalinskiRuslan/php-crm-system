@@ -14,16 +14,16 @@
 <body class="container">
     @auth
         <header>
-            <nav class="navbar navbar-expand-lg ">
+            <nav class="navbar navbar-expand-lg d-flex justify-content-between w-100">
                 <div class="container-fluid">
-                    <a class="navbar-brand" href="{{ route('home') }}">Shop CMS</a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false"
                         aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
-                    <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+                    <div class="collapse navbar-collapse justify-content-between w-100" id="navbarNavDarkDropdown">
                         <ul class="navbar-nav">
+                            <a class="navbar-brand" href="{{ route('home') }}">Shop CMS</a>
                             <li class="nav-item dropdown">
                                 <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown"
                                     aria-expanded="false">
@@ -32,16 +32,17 @@
                                 <ul class="dropdown-menu dropdown-menu-dark">
                                     <li><a class="dropdown-item" href="{{ route('categories') }}">Категории</a></li>
                                     <li><a class="dropdown-item" href="{{ route('subcategories') }}">Подкатегории</a></li>
-                                    <li><a class="dropdown-item" href="{{ route('brands') }}">Брэнды</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('brands') }}">Брeнды</a></li>
                                 </ul>
                             </li>
                         </ul>
+                        <div class="d-flex align-items-center gap-3">
+                            <div>{{ Auth::user()->name }}</div>
+                            <a class="btn btn-danger" href="{{ route('logout') }}">Выйти</a>
+                        </div>
                     </div>
                 </div>
-                <div style="display: flex; align-items: center; gap: 10px">
-                    <p>Вы вошли как {{ Auth::user()->name }}</p>
-                    <a href="{{ route('logout') }}">Выйти</a>
-                </div>
+
             </nav>
 
         </header>
