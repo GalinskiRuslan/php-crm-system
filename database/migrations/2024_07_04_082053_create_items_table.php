@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('count')->default(0);
             $table->double('price')->nullable(false)->default(0);
             $table->enum('status', ['active', 'on_moderation', 'out_of_stock', 'disabled'])->default('on_moderation');
+            $table->string('author')->nullable();
         });
     }
 

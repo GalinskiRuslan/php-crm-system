@@ -33,6 +33,7 @@
                                     <li><a class="dropdown-item" href="{{ route('categories') }}">Категории</a></li>
                                     <li><a class="dropdown-item" href="{{ route('subcategories') }}">Подкатегории</a></li>
                                     <li><a class="dropdown-item" href="{{ route('brands') }}">Брeнды</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('items') }}">Товары</a></li>
                                 </ul>
                             </li>
                         </ul>

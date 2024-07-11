@@ -3,6 +3,8 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BrandsController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ItemController;
+use App\Http\Controllers\ItemPhotoController;
 use App\Http\Controllers\SubcategoryController;
 use Illuminate\Support\Facades\Route;
 
@@ -27,6 +29,16 @@ Route::middleware('checkIsAdmin:admin')->post('/brands', [BrandsController::clas
 Route::middleware('checkIsAdmin:admin')->delete('/brands', [BrandsController::class, 'destroy'])->name('brands.destroy');
 Route::middleware('checkIsAdmin:admin')->get('/brands/{brand}', [BrandsController::class, 'edit'])->name('brands.edit');
 Route::middleware('checkIsAdmin:admin')->put('/brand/{id}', [BrandsController::class, 'update'])->name('brands.update');
+
+
+Route::middleware('checkIsAdmin:admin')->get('/items', [ItemController::class, 'index'])->name('items');
+Route::middleware('checkIsAdmin:admin')->post('/items', [ItemController::class, 'createNewItem'])->name('items.store');
+Route::middleware('checkIsAdmin:admin')->delete('/items', [ItemController::class, 'deleteItem'])->name('item.destroy');
+Route::middleware('checkIsAdmin:admin')->get('/items/{item}', [ItemController::class, 'editItem'])->name('item.edit');
+Route::middleware('checkIsAdmin:admin')->put('/items/{id}', [ItemController::class, 'updateItem'])->name('item.update');
+Route::middleware('checkIsAdmin:admin')->put('/items/moderate/{id}', [ItemController::class, 'moderateItem'])->name('item.moderate');
+Route::middleware('checkIsAdmin:admin')->delete('/items/photo', [ItemPhotoController::class, 'deletePhoto'])->name('photo.destroy');
+
 
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
